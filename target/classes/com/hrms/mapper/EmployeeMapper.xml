@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hrms.mapper.EmployeeMapper">
+    <sql id="table_name">tbl_emp</sql>
+    <sql id="select_fields">
+      emp_id, emp_name, emp_email, gender, department_id
+    </sql>
+    <sql id="select_withdept_fields">
+        emp_id, emp_name, emp_email, gender, department_id, dept_id, dept_leader, dept_name
+    </sql>
+
+    <resultMap id="withDeptResultMap" type="com.hrms.bean.Employee">
+        <id column="emp_id" property="empId"></id>
+        <result column="emp_name" property="empName"></result>
+        <result column="emp_email" property="empEmail"></result>
+        <result column="gender" property="gender"></result>
+        <result column="department_id" property="departmentId"></result>
+        <association property="department" column="department_id" javaType="com.hrms.bean.Department">
+            <id column="dept_id" property="deptId"></id>
+            <result column="dept_leader" property="deptLeader"></result>
+            <result column="dept_name" property="deptName"></result>
+        </association>
+    </resultMap>
+
+    <select id="selectOneById" parameterType="java.lang.Integer" resultType="com.hrms.bean.Employee">
+        SELECT
+        emp_id empId, emp_name empName, emp_email empEmail, gender, department_id departmentId
+        FROM
+        <include refid="table_name"/>
+        WHERE
+        emp_id = #{empId}
+    </select>
+
+    <select id="selectOneByName" parameterType="String" resultType="com.hrms.bean.Employee">
+        SELECT
+        emp_id empId, emp_name empName, emp_email empEmail, gender, department_id departmentId
+        FROM
+        <include refid="table_name"/>
+        WHERE
+        emp_name = #{empName}
+    </select>
+
+    <select id="selectWithDeptById" parameterType="Integer"  resultMap="withDeptResultMap">
+        SELECT
+        <include refid="select_withdept_fields"/>
+        FROM
+       tbl_emp e, tbl_dept d
+        WHERE
+        e.department_id = d.dept_id
+        AND
+        e.emp_id = #{empId}
+    </select>
+
+    <select id="selectByLimitAndOffset" resultMap="withDeptResultMap">
+        SELECT
+         <include refid="select_withdept_fields"></include>
+        FROM
+        tbl_emp e
+        LEFT JOIN
+        tbl_dept d
+        ON
+        e.department_id = d.dept_id
+        ORDER BY e.emp_id
+        LIMIT #{offset}, #{limit}
+    </select>
+
+    <update id="updateOneById" parameterType="com.hrms.bean.Employee">
+        UPDATE
+        <include refid="table_name"/>
+        SET
+        emp_email = #{employee.empEmail, jdbcType = VARCHAR},
+        gender = #{employee.gender, jdbcType = VARCHAR},
+        department_id = #{employee.departmentId, jdbcType = INTEGER}
+        WHERE
+        emp_id = #{empId, jdbcType = INTEGER}
+    </update>
+</mapper>
