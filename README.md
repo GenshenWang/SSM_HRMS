@@ -18,8 +18,9 @@
 
 从这个项目中你可以完整独立地体验从前端到后台的搭建过程，以及使用SSM框架完成后台的CRUD整个流程。
 
-### 一、准备
+## 一、准备
 准备部分主要包括数据库建表、SSM框架的搭建启动。
+
 **1 数据库建表**
 tbl_emp表：
 ```
@@ -64,8 +65,9 @@ CREATE TABLE `tbl_dept`(
 写好上述配置文件后，可以在controller目录下新建TestController.java文件和WEB-INF/jsp/test.jsp，启动容器测试是否成功。
 
 
-### 二、DAO层代码完成与测试
-这一章主要完成数据库底层的CRUD代码实现与测试工作。
+## 二、DAO层代码完成与测试
+这一章主要完成数据库底层的CRUD代码实现与测试工作.
+
 **1. MyBasits配置文件**
 见resources/MyBatis.xml.
 
