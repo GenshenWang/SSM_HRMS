@@ -68,7 +68,7 @@
     $(".emp_add_btn").click(function () {
 
         $.ajax({
-            url:"/hrms/dept/getDeptList",
+            url:"/hrms/dept/getDeptName",
             type:"GET",
             success:function (result) {
                 if (result.code == 100){
