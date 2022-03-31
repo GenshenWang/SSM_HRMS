@@ -38,7 +38,7 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-webmvc</artifactId>
-      <version>4.2.9.RELEASE</version>
+      <version>5.3.18</version>
     </dependency>
     <!-- mysql -->
     <dependency>
